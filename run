@@ -1,0 +1,4 @@
+DIR=$(pwd)
+g++ $DIR/$1 
+$DIR/a.out
+rm $DIR/a.out
