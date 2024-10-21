@@ -1,4 +1,41 @@
+#!/bin/bash
 DIR=$(pwd)
-g++ $DIR/$1 
+FILE=""
+FLAG=""
+# Handle multiple files and flags
+while [ $# -gt 0 ]; do
+	# this is a flag
+	# handle flags
+	if [[ "$1" == -* ]]; then
+		FLAG="${1}"
+	else
+		FILE="${1} $FILE"
+	fi
+	shift
+done
+case ${FLAG} in
+-sfml)
+	g++ ${DIR}/${FILE} -o a.out -lsfml-graphics -lsfml-window -lsfml-system
+	echo "flag triggered"
+	;;
+"")
+	g++ ${DIR}/${FILE}
+	;;
+-h | --help)
+	echo "run - run your code"
+	echo "options: "
+	echo "-h, --help: help"
+	echo "-sfml compile and run an sfml source file"
+	;;
+*)
+	echo "wrong argument lil bro"
+	exit 1
+	;;
+esac
+# run and remove execute
+if [[ -z $FILE ]]; then
+	echo "No file specified"
+	exit 1 
+fi
 $DIR/a.out
 rm $DIR/a.out
